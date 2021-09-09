@@ -109,6 +109,7 @@
   },
   "defaultProject": "jhipsteronlinemysqlgradle",
   "cli": {
+    "analytics": false,
     "packageManager": "npm"
   }
 }

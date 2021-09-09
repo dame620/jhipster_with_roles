@@ -43,7 +43,9 @@
     "devServerPort": 4200,
     "clientTheme": "none",
     "clientThemeVariant": "",
-    "reactive": false
+    "reactive": false,
+    "entities": ["Appointment", "Manager", "Company", "Bank", "Adviser"],
+    "lastLiquibaseTimestamp": 1631203795000
   },
   "git-provider": "GitHub",
   "git-company": "dame620",
