@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -48,6 +49,7 @@ public class CompanyResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/companies")
+    @PreAuthorize("hasAuthority('ROLE_SUPMANAGER')")
     public ResponseEntity<Company> createCompany(@RequestBody Company company) throws URISyntaxException {
         log.debug("REST request to save Company : {}", company);
         if (company.getId() != null) {
@@ -71,6 +73,7 @@ public class CompanyResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/companies/{id}")
+    @PreAuthorize("hasAuthority('ROLE_SUPMANAGER')")
     public ResponseEntity<Company> updateCompany(@PathVariable(value = "id", required = false) final Long id, @RequestBody Company company)
         throws URISyntaxException {
         log.debug("REST request to update Company : {}, {}", id, company);
@@ -104,6 +107,7 @@ public class CompanyResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/companies/{id}", consumes = "application/merge-patch+json")
+    @PreAuthorize("hasAuthority('ROLE_SUPMANAGER')")
     public ResponseEntity<Company> partialUpdateCompany(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody Company company
@@ -134,6 +138,7 @@ public class CompanyResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of companies in body.
      */
     @GetMapping("/companies")
+    @PreAuthorize("hasAuthority('ROLE_SUPMANAGER')")
     public List<Company> getAllCompanies() {
         log.debug("REST request to get all Companies");
         return companyService.findAll();
@@ -146,6 +151,7 @@ public class CompanyResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the company, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/companies/{id}")
+    @PreAuthorize("hasAuthority('ROLE_SUPMANAGER')")
     public ResponseEntity<Company> getCompany(@PathVariable Long id) {
         log.debug("REST request to get Company : {}", id);
         Optional<Company> company = companyService.findOne(id);
@@ -159,6 +165,7 @@ public class CompanyResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/companies/{id}")
+    @PreAuthorize("hasAuthority('ROLE_SUPMANAGER')")
     public ResponseEntity<Void> deleteCompany(@PathVariable Long id) {
         log.debug("REST request to delete Company : {}", id);
         companyService.delete(id);

@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -52,6 +53,7 @@ public class AppointmentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/appointments")
+    @PreAuthorize("hasAuthority('ROLE_MANAGER')")
     public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment appointment) throws URISyntaxException {
         log.debug("REST request to save Appointment : {}", appointment);
         if (appointment.getId() != null) {
@@ -75,6 +77,7 @@ public class AppointmentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/appointments/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADVISER')")
     public ResponseEntity<Appointment> updateAppointment(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody Appointment appointment

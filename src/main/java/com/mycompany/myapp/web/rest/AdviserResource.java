@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -54,6 +55,7 @@ public class AdviserResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/advisers")
+    @PreAuthorize("hasAuthority('ROLE_SUPADVISER')")
     public ResponseEntity<Adviser> createAdviser(@RequestBody Adviser adviser) throws URISyntaxException {
         log.debug("REST request to save Adviser : {}", adviser);
         if (adviser.getId() != null) {
@@ -77,6 +79,7 @@ public class AdviserResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/advisers/{id}")
+    @PreAuthorize("hasAuthority('ROLE_SUPADVISER')")
     public ResponseEntity<Adviser> updateAdviser(@PathVariable(value = "id", required = false) final Long id, @RequestBody Adviser adviser)
         throws URISyntaxException {
         log.debug("REST request to update Adviser : {}, {}", id, adviser);
@@ -110,6 +113,7 @@ public class AdviserResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/advisers/{id}", consumes = "application/merge-patch+json")
+    @PreAuthorize("hasAuthority('ROLE_SUPADVISER')")
     public ResponseEntity<Adviser> partialUpdateAdviser(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody Adviser adviser
@@ -141,6 +145,7 @@ public class AdviserResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of advisers in body.
      */
     @GetMapping("/advisers")
+    @PreAuthorize("hasAuthority('ROLE_SUPADVISER')")
     public ResponseEntity<List<Adviser>> getAllAdvisers(Pageable pageable) {
         log.debug("REST request to get a page of Advisers");
         Page<Adviser> page = adviserService.findAll(pageable);
@@ -155,6 +160,7 @@ public class AdviserResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the adviser, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/advisers/{id}")
+    @PreAuthorize("hasAuthority('ROLE_SUPADVISER')")
     public ResponseEntity<Adviser> getAdviser(@PathVariable Long id) {
         log.debug("REST request to get Adviser : {}", id);
         Optional<Adviser> adviser = adviserService.findOne(id);
@@ -168,6 +174,7 @@ public class AdviserResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/advisers/{id}")
+    @PreAuthorize("hasAuthority('ROLE_SUPADVISER')")
     public ResponseEntity<Void> deleteAdviser(@PathVariable Long id) {
         log.debug("REST request to delete Adviser : {}", id);
         adviserService.delete(id);

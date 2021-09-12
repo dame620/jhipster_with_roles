@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -54,6 +55,7 @@ public class ManagerResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/managers")
+    @PreAuthorize("hasAuthority('ROLE_SUPMANAGER')")
     public ResponseEntity<Manager> createManager(@RequestBody Manager manager) throws URISyntaxException {
         log.debug("REST request to save Manager : {}", manager);
         if (manager.getId() != null) {
@@ -77,6 +79,7 @@ public class ManagerResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/managers/{id}")
+    @PreAuthorize("hasAuthority('ROLE_SUPMANAGER')")
     public ResponseEntity<Manager> updateManager(@PathVariable(value = "id", required = false) final Long id, @RequestBody Manager manager)
         throws URISyntaxException {
         log.debug("REST request to update Manager : {}, {}", id, manager);
@@ -110,6 +113,7 @@ public class ManagerResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/managers/{id}", consumes = "application/merge-patch+json")
+    @PreAuthorize("hasAuthority('ROLE_SUPMANAGER')")
     public ResponseEntity<Manager> partialUpdateManager(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody Manager manager
@@ -141,6 +145,7 @@ public class ManagerResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of managers in body.
      */
     @GetMapping("/managers")
+    @PreAuthorize("hasAuthority('ROLE_SUPMANAGER')")
     public ResponseEntity<List<Manager>> getAllManagers(Pageable pageable) {
         log.debug("REST request to get a page of Managers");
         Page<Manager> page = managerService.findAll(pageable);
@@ -155,6 +160,7 @@ public class ManagerResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the manager, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/managers/{id}")
+    @PreAuthorize("hasAuthority('ROLE_SUPMANAGER')")
     public ResponseEntity<Manager> getManager(@PathVariable Long id) {
         log.debug("REST request to get Manager : {}", id);
         Optional<Manager> manager = managerService.findOne(id);
@@ -168,6 +174,7 @@ public class ManagerResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/managers/{id}")
+    @PreAuthorize("hasAuthority('ROLE_SUPMANAGER')")
     public ResponseEntity<Void> deleteManager(@PathVariable Long id) {
         log.debug("REST request to delete Manager : {}", id);
         managerService.delete(id);

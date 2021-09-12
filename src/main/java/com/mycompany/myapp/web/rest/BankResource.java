@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -48,6 +49,7 @@ public class BankResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/banks")
+    @PreAuthorize("hasAuthority('ROLE_SUPADVISER')")
     public ResponseEntity<Bank> createBank(@RequestBody Bank bank) throws URISyntaxException {
         log.debug("REST request to save Bank : {}", bank);
         if (bank.getId() != null) {
@@ -71,6 +73,7 @@ public class BankResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/banks/{id}")
+    @PreAuthorize("hasAuthority('ROLE_SUPADVISER')")
     public ResponseEntity<Bank> updateBank(@PathVariable(value = "id", required = false) final Long id, @RequestBody Bank bank)
         throws URISyntaxException {
         log.debug("REST request to update Bank : {}, {}", id, bank);
@@ -104,6 +107,7 @@ public class BankResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/banks/{id}", consumes = "application/merge-patch+json")
+    @PreAuthorize("hasAuthority('ROLE_SUPADVISER')")
     public ResponseEntity<Bank> partialUpdateBank(@PathVariable(value = "id", required = false) final Long id, @RequestBody Bank bank)
         throws URISyntaxException {
         log.debug("REST request to partial update Bank partially : {}, {}", id, bank);
@@ -132,6 +136,7 @@ public class BankResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of banks in body.
      */
     @GetMapping("/banks")
+    @PreAuthorize("hasAuthority('ROLE_SUPADVISER')")
     public List<Bank> getAllBanks() {
         log.debug("REST request to get all Banks");
         return bankService.findAll();
@@ -144,6 +149,7 @@ public class BankResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the bank, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/banks/{id}")
+    @PreAuthorize("hasAuthority('ROLE_SUPADVISER')")
     public ResponseEntity<Bank> getBank(@PathVariable Long id) {
         log.debug("REST request to get Bank : {}", id);
         Optional<Bank> bank = bankService.findOne(id);
@@ -157,6 +163,7 @@ public class BankResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/banks/{id}")
+    @PreAuthorize("hasAuthority('ROLE_SUPADVISER')")
     public ResponseEntity<Void> deleteBank(@PathVariable Long id) {
         log.debug("REST request to delete Bank : {}", id);
         bankService.delete(id);
